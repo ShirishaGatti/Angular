@@ -19,12 +19,19 @@ export class Complaints implements OnInit {
 
   constructor(private complaintService: ComplaintService) {}
 
-  ngOnInit() {
-    this.complaintService.getComplaints().subscribe(data => {
-      this.complaints = data;
-      this.totalComplaints = data.length;
-    });
-  }
+  loading = true;
+
+ngOnInit() {
+  this.complaintService.getComplaints().subscribe(data => {
+
+    console.log(data);
+
+    this.complaints = data.Complaints;
+    this.totalComplaints = data.TotalCount;
+
+    this.loading = false;
+  });
+}
    showComplaints = false;
   viewComplaints():void {
    this.showComplaints=!this.showComplaints;

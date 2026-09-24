@@ -8,7 +8,9 @@ export class ComplaintService {
 
   constructor(private http: HttpClient) {}
 
-  getComplaints() {
-    return this.http.get<any[]>('https://localhost:44300/api/complaints');
-  }
+ getComplaints() {
+  return this.http.get<any>(
+    'http://localhost:51733/api/citizen/complaints'
+  );
+}
 }

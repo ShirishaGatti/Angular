@@ -19,25 +19,39 @@
       <th>Status</th>
     </tr>
   </thead>
+<p *ngIf="loading">Loading complaints...</p>
 
+<div *ngIf="!loading && hasComplaints()">
+  <button [disabled]="isDisabled" (click)="viewComplaints()">
+    View Complaints
+  </button>
+</div>
+
+<div *ngIf="!loading && !hasComplaints()">
+  No complaints found.
+</div>
   <tbody>
-    <tr *ngFor="let c of complaints">
+   <tr *ngFor="let c of complaints">
     <td>
       <a
-        [routerLink]="['/complaint', c.id]"
+        [routerLink]="['/complaint', c.ComplaintId]"
         [state]="{ complaint: c }">
-        {{ c.id }}
+        {{ c.ComplaintId }}
       </a>
     </td>
-      <td>{{ c.title }}</td>
-     <td [ngClass]="{
-    'status-open': c.status === 'Open',
-    'status-progress': c.status === 'In Progress',
-    'status-resolved': c.status === 'Resolved'
+
+    <td>{{ c.Title }}</td>
+
+    <td [ngClass]="{
+      'status-open': c.StatusName === 'Open',
+      'status-progress': c.StatusName === 'In Progress',
+      'status-closed': c.StatusName === 'Closed'
     }">
-    {{ c.status }}
+      {{ c.StatusName }}
     </td>
-    </tr>
+  </tr>
+
+    
   </tbody>
 </table>
 
