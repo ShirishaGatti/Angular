@@ -1,0 +1,67 @@
+<h1>{{title}}</h1>
+
+<p>Total Complaints: {{totalComplaints}}</p>
+<button routerLink="/dashboard">Back</button>
+<div *ngIf="hasComplaints()">
+   <button [disabled]="isDisabled" (click)="viewComplaints()">View Complaints</button>
+</div>
+   <button [disabled]="isDisabled" (click)="addComplaint()">Add Complaint</button>
+
+<div *ngIf="showComplaints">
+
+  <h2>Complaints</h2>
+
+<table class="complaints-table">
+  <thead>
+    <tr>
+      <th>Complaint ID</th>
+      <th>Title</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let c of complaints">
+    <td>
+      <a
+        [routerLink]="['/complaint', c.id]"
+        [state]="{ complaint: c }">
+        {{ c.id }}
+      </a>
+    </td>
+      <td>{{ c.title }}</td>
+     <td [ngClass]="{
+    'status-open': c.status === 'Open',
+    'status-progress': c.status === 'In Progress',
+    'status-resolved': c.status === 'Resolved'
+    }">
+    {{ c.status }}
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+<div *ngIf="!hasComplaints()">
+    No complaints found.
+</div>
+
+   <!-- <button [disabled]="isDisabled" (click)="addComplaint()">Add Complaint</button> -->
+
+   <div *ngIf="add">
+    <h2>Add Complaint</h2>
+    <form (ngSubmit)="submitComplaint()">
+      <label for="title">Title:</label>
+      <input type="text" id="title" [(ngModel)]="newComplaint.title" name="title" required>
+
+      <label for="status">Status:</label>
+      <select id="status" [(ngModel)]="newComplaint.status" name="status" required>
+        <option value="Open">Open</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </form>
+    </div>
+

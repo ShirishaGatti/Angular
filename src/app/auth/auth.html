@@ -1,0 +1,14 @@
+<p>{{title}}</p>
+
+   <div >
+    <h2>Add Complaint</h2>
+    <form (ngSubmit)="login()">
+      <label for="title">userName:</label>
+      <input type="text" id="userName" [(ngModel)]="user.userName" name="title" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+
+      <button type="submit">Submit</button>
+    </form>
+    </div>
