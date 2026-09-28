@@ -8,9 +8,15 @@ export class ComplaintService {
 
   constructor(private http: HttpClient) {}
 
- getComplaints() {
+ getComplaints(pageNumber: number, pageSize: number) {
   return this.http.get<any>(
-    'http://localhost:51733/api/citizen/complaints'
+    'http://localhost:51733/api/citizen/complaints',
+    {
+      params: {
+        pageNumber: pageNumber,
+        pageSize: pageSize
+      }
+    }
   );
 }
 }
