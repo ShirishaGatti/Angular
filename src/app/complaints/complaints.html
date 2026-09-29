@@ -1,133 +1,15 @@
-<!-- <h1>{{title}}</h1>
-
-<p>Total Complaints: {{totalComplaints}}</p>
-<button routerLink="/dashboard">Back</button>
-<div *ngIf="hasComplaints()">
-   <button [disabled]="isDisabled" (click)="viewComplaints()">View Complaints</button>
-</div>
-   <button [disabled]="isDisabled" (click)="addComplaint()">Add Complaint</button>
-
-<div *ngIf="showComplaints">
-
-  <h2>Complaints</h2>
-
-<table class="complaints-table">
-  <thead>
-    <tr>
-      <th>Complaint ID</th>
-      <th>Title</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-<p *ngIf="loading">Loading complaints...</p>
-
-<div *ngIf="!loading && !hasComplaints()">
-  No complaints found.
-</div>
-  <tbody>
-   <tr *ngFor="let c of complaints">
-    <td>
-      <a
-        [routerLink]="['/complaint', c.ComplaintId]"
-        [state]="{ complaint: c }">
-        {{ c.ComplaintId }}
-      </a>
-    </td>
-
-    <td>{{ c.Title }}</td>
-
-    <td [ngClass]="{
-      'status-open': c.StatusName === 'Open',
-      'status-progress': c.StatusName === 'In Progress',
-      'status-closed': c.StatusName === 'Closed'
-    }">
-      {{ c.StatusName }}
-    </td>
-  </tr>
-
-    
-  </tbody>
-</table>
-
-</div>
-<ngb-pagination
-  [collectionSize]="totalComplaints"
-  [(page)]="page"
-  [pageSize]="pageSize"
-  [maxSize]="5"
-  [rotate]="true"
-  [ellipses]="true"
-  [boundaryLinks]="true"
-  (pageChange)="onPageChange($event)">
-</ngb-pagination>
-
-<select
-  [(ngModel)]="pageSize"
-  (change)="onPageSizeChange()">
-
-  <option [value]="5">5</option>
-  <option [value]="10">10</option>
-  <option [value]="20">20</option>
-  <option [value]="50">50</option>
-
-</select>
-
-<div *ngIf="!hasComplaints()">
-    No complaints found.
-</div>
-
- <button [disabled]="isDisabled" (click)="addComplaint()">Add Complaint</button> -->
-<!-- 
-   <div *ngIf="add">
-    <h2>Add Complaint</h2>
-    <form (ngSubmit)="submitComplaint()">
-      <label for="title">Title:</label>
-      <input type="text" id="title" [(ngModel)]="newComplaint.title" name="title" required>
-
-      <label for="status">Status:</label>
-      <select id="status" [(ngModel)]="newComplaint.status" name="status" required>
-        <option value="Open">Open</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Resolved">Resolved</option>
-      </select>
-
-      <button type="submit">Submit</button>
-    </form>
-    </div> -->
 <h1>{{ title }}</h1>
 
-<p>Total Complaints: {{ totalComplaints }}</p>
-
+<!-- <p>Total Complaints: {{ totalComplaints }}</p> -->
+<!-- 
 <button routerLink="/dashboard">
   Back
-</button>
-
-<button *ngIf="hasComplaints()" [disabled]="isDisabled" (click)="viewComplaints()">
-  {{ showComplaints ? 'Hide Complaints' : 'View Complaints' }}
-</button>
-
-<button [disabled]="isDisabled" (click)="addComplaint()">
-  Add Complaint
-</button>
-
+</button> -->
 
 <!-- ================= COMPLAINTS ================= -->
 
-<div *ngIf="showComplaints">
-
-  <h2>Complaints</h2>
-  <!-- Loading -->
-  <p *ngIf="loading">
-    Loading complaints...
-  </p>
-
-  <!-- No complaints -->
-  <p *ngIf="!loading && !hasComplaints()">
-    No complaints found.
-  </p>
-
-  <!-- Complaint table -->
-  <div *ngIf="hasComplaints()" class="table-container">
+   <!-- Complaint table -->
+  <div  class="table-container">
     <table class="complaints-table">
       <thead>
         <tr>
@@ -140,7 +22,7 @@
       <tbody>
         <tr *ngFor="let c of complaints">
           <td>
-            <a [routerLink]="['/complaint', c.ComplaintId || c.complaintId]" [state]="{ complaint: c }">
+            <a [routerLink]="['/complaint', c.ComplaintId ]" [state]="{ complaint: c }">
 
               {{ c.ComplaintId || c.complaintId }}
             </a>
@@ -149,9 +31,9 @@
             {{ c.Title || c.title }}
           </td>
           <td [ngClass]="{
-              'status-open': (c.StatusName || c.statusName) === 'Open',
-              'status-progress': (c.StatusName || c.statusName) === 'In Progress',
-              'status-closed': (c.StatusName || c.statusName) === 'Closed'
+              'status-open': (c.StatusName ) === 'Open',
+              'status-progress': (c.StatusName ) === 'In Progress',
+              'status-closed': (c.StatusName ) === 'Closed'
             }">
             {{ c.StatusName || c.statusName }}
           </td>
@@ -188,13 +70,12 @@
           <option [ngValue]="50">50</option>
         </select>
       </div>
-    </div>
   </div>
 </div>
 
 <!-- ================= ADD COMPLAINT ================= -->
-
-<div *ngIf="add">
+<!-- 
+<div >
 
   <h2>Add Complaint</h2>
 
@@ -234,4 +115,4 @@
 
   </form>
 
-</div>
+</div> -->

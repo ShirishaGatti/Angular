@@ -22,7 +22,7 @@ export class Complaints implements OnInit {
 
   constructor(private complaintService: ComplaintService) { }
 
-  loading = true;
+
 
   // ngOnInit() {
   //   this.complaintService.getComplaints().subscribe(data => {
@@ -41,27 +41,27 @@ export class Complaints implements OnInit {
   }
 
   loadComplaints() {
-    this.loading = true;
+    
 
     this.complaintService
       .getComplaints(this.page, this.pageSize)
       .subscribe({
         next: (data) => {
           console.log('DATA:', data);
-          this.complaints = data?.Complaints ?? data?.complaints ?? [];
-          this.totalComplaints = data?.TotalCount ?? data?.totalCount ?? data?.TotalRecords ?? data?.totalRecords ?? 0;
+          this.complaints = data.Complaints;
+          this.totalComplaints = data.TotalCount ;
 
           console.log('Complaints:', this.complaints);
           console.log('TotalCount:', this.totalComplaints);
           console.log('Page:', this.page);
           console.log('PageSize:', this.pageSize);
 
-          this.loading = false;
+       
         },
 
         error: (error) => {
           console.error('API ERROR:', error);
-          this.loading = false;
+         
         }
       });
   }
@@ -84,21 +84,10 @@ export class Complaints implements OnInit {
     );
   }
   showComplaints = true;
-  viewComplaints(): void {
-    this.showComplaints = !this.showComplaints;
-  }
+   viewComplaints(): void {
+     this.showComplaints = !this.showComplaints;
+   }
 
-  // totalComplaints = this.complaints.length;
-
-  isDisabled = false;
-  hasComplaints() {
-    // return this.totalComplaints > 0 || (this.complaints && this.complaints.length > 0);
-    return true
-  }
-  add = false
-  addComplaint() {
-    this.add = !this.add;
-  }
   newComplaint = {
     title: '',
     status: 'Open'
