@@ -1,1 +1,46 @@
+:root {
+  --bg: #0f1720;
+  --bg2: #151f2b;
+  --bg3: #1d2935;
+
+  --tx: #f1f5f9;
+  --tx2: #cbd5e1;
+  --tx3: #94a3b8;
+
+  --bd: #334155;
+
+  --card: #151f2b;
+  --input: #1d2935;
+
+  --grad: linear-gradient(135deg, #2563eb, #0ea5e9);
+}
 /* You can add global styles to this file, and also import other style files */
+
+/* ================= GLOBAL DARK MODE ================= */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: #0f1720;
+  color: #e5e7eb;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* Angular root */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main page area */
+main {
+  flex: 1;
+  background: #0f1720;
+  color: #e5e7eb;
+}
