@@ -8,15 +8,36 @@ export class ComplaintService {
 
   constructor(private http: HttpClient) {}
 
- getComplaints(pageNumber: number, pageSize: number) {
+//  getComplaints(pageNumber: number, pageSize: number) {
+//   return this.http.get<any>(
+//     'http://localhost:51733/api/citizen/complaints',
+//     {
+//       params: {
+//         pageNumber: pageNumber,
+//         pageSize: pageSize
+//       }
+//     }
+//   );
+// }
+ getComplaints(filter: any) {
+
   return this.http.get<any>(
     'http://localhost:51733/api/citizen/complaints',
     {
-      params: {
-        pageNumber: pageNumber,
-        pageSize: pageSize
-      }
+      params: filter
     }
   );
-}
+ 
+ }
+  getWards(cityId: number) {
+    return this.http.get<any>(
+      `http://localhost:51733/api/citizen/wards/${cityId}`
+    );
+  }
+  saveComplaint(complaint: any) {
+    return this.http.post<any>(
+      'http://localhost:51733/api/citizen/saveComplaint',
+      complaint
+    );
+  }
 }

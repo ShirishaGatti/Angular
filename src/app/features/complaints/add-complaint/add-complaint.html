@@ -1,0 +1,362 @@
+<!-- File / Edit Complaint Modal -->
+ <h1>ADD COMPLAINT PAGE WORKING</h1>
+<div
+  id="complaintModalOverlay"
+  class="dash-modal-overlay"
+  [style.display]="showComplaintModal ? 'flex' : 'none'"
+  (click)="closeComplaintModal($event)"
+>
+  <div
+    class="dash-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <!-- Header -->
+    <div class="dash-modal-header">
+
+      <h5 id="complaintModalTitle">
+        {{ isEditMode ? 'Edit Complaint' : 'File a New Complaint' }}
+      </h5>
+
+      <button
+        type="button"
+        class="dash-modal-close"
+        (click)="closeComplaintModal()"
+      >
+        &times;
+      </button>
+
+    </div>
+
+
+    <!-- Form -->
+    <form
+      id="complaintForm"
+      #complaintForm="ngForm"
+      (ngSubmit)="saveComplaint(complaintForm)"
+      enctype="multipart/form-data"
+    >
+
+      <!-- Hidden Complaint ID -->
+      <input
+        type="hidden"
+        name="ComplaintId"
+        [(ngModel)]="complaint.ComplaintId"
+      />
+
+
+      <!-- Body -->
+      <div class="dash-modal-body">
+
+        <div class="dash-form-horizontal">
+
+          <!-- Title -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Title *
+            </label>
+
+            <input
+              type="text"
+              name="Title"
+              id="fldTitle"
+              class="dash-input"
+              maxlength="150"
+              required
+              [(ngModel)]="complaint.Title"
+            />
+
+          </div>
+
+
+          <!-- Description -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Description *
+            </label>
+
+            <textarea
+              name="Description"
+              id="fldDescription"
+              rows="3"
+              class="dash-input"
+              maxlength="1000"
+              required
+              [(ngModel)]="complaint.Description"
+            ></textarea>
+
+          </div>
+
+
+          <!-- Category -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Category *
+            </label>
+
+            <select
+              name="CategoryId"
+              id="fldCategoryId"
+              class="dash-input"
+              required
+              [(ngModel)]="complaint.CategoryId"
+            >
+
+              <option [ngValue]="null">
+                -- Select --
+              </option>
+
+              <option
+                *ngFor="let cat of categories"
+                [ngValue]="cat.CategoryId"
+              >
+                {{ cat.CategoryName }}
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Priority -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Priority *
+            </label>
+
+            <select
+              name="PriorityId"
+              id="fldPriorityId"
+              class="dash-input"
+              required
+              [(ngModel)]="complaint.PriorityId"
+            >
+
+              <option [ngValue]="null">
+                -- Select --
+              </option>
+
+              <option
+                *ngFor="let priority of priorities"
+                [ngValue]="priority.PriorityId"
+              >
+                {{ priority.PriorityName }}
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- City -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              City *
+            </label>
+
+            <select
+              name="CityId"
+              id="complaintCityId"
+              class="dash-input"
+              required
+              [(ngModel)]="complaint.CityId"
+              (change)="onCityChange()"
+            >
+
+              <option [ngValue]="null">
+                -- Select --
+              </option>
+
+              <option
+                *ngFor="let city of cities"
+                [ngValue]="city.CityId"
+              >
+                {{ city.CityName }}
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Ward -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Ward *
+            </label>
+
+            <select
+              name="WardId"
+              id="complaintWardId"
+              class="dash-input"
+              required
+              [(ngModel)]="complaint.WardId"
+              [disabled]="!complaint.CityId"
+            >
+
+              <option [ngValue]="null">
+                {{ complaint.CityId
+                    ? '-- Select --'
+                    : '-- Select City First --' }}
+              </option>
+
+              <option
+                *ngFor="let ward of wards"
+                [ngValue]="ward.WardId"
+              >
+                {{ ward.WardName }}
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Address -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Address *
+            </label>
+
+            <input
+              type="text"
+              name="AddressLine"
+              id="fldAddressLine"
+              class="dash-input"
+              maxlength="250"
+              required
+              [(ngModel)]="complaint.AddressLine"
+            />
+
+          </div>
+
+
+          <!-- Landmark -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Landmark
+            </label>
+
+            <input
+              type="text"
+              name="Landmark"
+              id="fldLandmark"
+              class="dash-input"
+              maxlength="150"
+              [(ngModel)]="complaint.Landmark"
+            />
+
+          </div>
+
+
+          <!-- Attachments -->
+          <div class="dash-form-group">
+
+            <label class="dash-label">
+              Attachments
+            </label>
+
+            <div class="attachment-field">
+
+              <input
+                type="file"
+                name="Attachments"
+                id="complaintAttachments"
+                class="dash-input"
+                multiple
+                [attr.data-max-size-mb]="maxAttachmentSizeMB"
+                [attr.data-allowed-ext]="allowedExtensionsCsv"
+                data-max-count="5"
+                (change)="onAttachmentsSelected($event)"
+              />
+
+              <small style="color:var(--tx3);">
+                jpg, jpeg, png, pdf, doc, docx
+                up to 5 files,
+                {{ maxAttachmentSizeMB }} MB each.
+              </small>
+
+
+              <!-- Attachment Preview -->
+              <div
+                id="attachmentPreviewList"
+                class="attachment-preview-list mt-2"
+              >
+
+                <div
+                  *ngFor="let file of selectedFiles; let i = index"
+                  class="attachment-preview-item"
+                >
+
+                  <span>
+                    {{ file.name }}
+                  </span>
+
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    (click)="removeAttachment(i)"
+                  >
+                    ×
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Footer -->
+      <div class="dash-modal-footer">
+
+        <button
+          type="button"
+          class="btn-dash-outline"
+          (click)="closeComplaintModal()"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn-dash-primary"
+          id="complaintSubmitBtn"
+          [disabled]="isSaving || complaintForm.invalid"
+        >
+
+          <span
+            class="spinner-border spinner-border-sm"
+            [class.d-none]="!isSaving"
+            id="complaintSpinner"
+          ></span>
+
+          <span id="complaintSubmitLabel">
+            {{ isSaving
+                ? 'Saving...'
+                : (isEditMode ? 'Update Complaint' : 'Submit Complaint') }}
+          </span>
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>

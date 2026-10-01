@@ -1299,3 +1299,65 @@ html.lm .chat-thread { scrollbar-color:#d1d5db transparent; }
 /* ── Scrollable in drawer ──────────────────────────── */
 .drawer-card .cd-hero { flex-shrink: 0; }
 .drawer-card .cd-body { flex: 1; overflow-y: auto; min-height: 0; }
+.complaint-toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 99999;
+
+  min-width: 320px;
+  max-width: 450px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+  animation: toastSlideIn 0.3s ease;
+}
+
+.complaint-toast.success {
+  background: #198754;
+  color: white;
+}
+
+.complaint-toast.error {
+  background: #dc3545;
+  color: white;
+}
+
+.complaint-toast i {
+  font-size: 20px;
+}
+
+.toast-close {
+  margin-left: auto;
+
+  border: none;
+  background: transparent;
+
+  color: white;
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
